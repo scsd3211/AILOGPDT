@@ -45,5 +45,6 @@ class Application(tk.Frame):
     def UDTCustomer(self,clerk):
         while self.UDTCustomeLive:
             if self.ifRun:
+                #print("UDT Customer Run")
                 haha = clerk.get()
                 print("UDT UI get 到了数据：（{}）".format(haha))

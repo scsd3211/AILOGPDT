@@ -69,24 +69,26 @@ class FileReadGetAndPutClass:
     GPSCleark   = 0;
 
 
-    def __init__(self, UDTC,PacketC, VoiceC, GPSC):
+    def __init__(self, UDTC,PacketC, VoiceC, GPSC,OTHERC):
         self.UDTputClerk = UDTC
         self.PacketCleak = PacketC
         self.VoiceCleak= VoiceC
         self.GPSCleark = GPSC
+        self.OTHERCleark = OTHERC
 
 
     def FileReadCustomer(self,clerk):
         while self.FileReadCustomeLive:
             if self.ifRun:
                 haha = clerk.get()
-                if 1==2:
+                if 1==1:
                     self.UDTputClerk.put(haha)
                     self.PacketCleak.put(haha)
                     self.VoiceCleak.put(haha)
                     self.GPSCleark.put(haha)
+                    self.OTHERCleark.put(haha)
 
-                print("File获取到了数据：（{}）".format(haha))
+                print("FileReadGetAndPutClass获取到了数据：（{}）".format(haha))
     def SerialCustomerStop(self):
         self.ifRun = FALSE
         print("SerialCustomerStop")
@@ -112,9 +114,10 @@ UDTclerkFile = queue.Queue(1)
 PacketclerkFile = queue.Queue(1)
 VoiceclerkFile = queue.Queue(1)
 GPSclerkFile = queue.Queue(1)
+OTHERSclerkFile = queue.Queue(1)
 
 #将获取的数据分配给 每个模块
-AllallocationFile = FileReadGetAndPutClass(UDTclerkFile,PacketclerkFile,VoiceclerkFile,GPSclerkFile)
+AllallocationFile = FileReadGetAndPutClass(UDTclerkFile,PacketclerkFile,VoiceclerkFile,GPSclerkFile,OTHERSclerkFile)
 
 
 SerialThreading = threading.Thread(target=SerialClassME.SerialGet,args=(clerk,))
@@ -144,25 +147,33 @@ appAIFileReadGetThreadingLast.start()
 appVOICE = VOICEUIpy.Application(master=root)
 #appUDT.pack(side=RIGHT)
 appVOICE.place(bordermode=OUTSIDE, height=200, width=200,relheight = 0.5,relwidth =0.5,relx=0.3, rely=0.0)
+appVOICEFileReadThreading = threading.Thread(target= appVOICE.VOICECustomer,args=(VoiceclerkFile,))
+appVOICEFileReadThreading.start()
 
 
 appUDT = UDTUIpy.Application(master=root)
 #appUDT.pack(side=RIGHT)
 appUDT.place(bordermode=OUTSIDE, height=200, width=200,relheight = 0.5,relwidth =0.5,relx=0.6, rely=0.0)
 appUDTFileReadThreading = threading.Thread(target= appUDT.UDTCustomer,args=(UDTclerkFile,))
+appUDTFileReadThreading.start()
 
 
 appPACKET = PACKETUIpy.Application(master=root)
 appPACKET.place(bordermode=OUTSIDE, height=100, width=100,relheight = 0.5,relwidth =0.5,relx=0.0, rely=0.5)
+appPACKETFileReadThreading = threading.Thread(target= appPACKET.PACKETCustomer,args=(PacketclerkFile,))
+appPACKETFileReadThreading.start()
 
 appGPS = GPSUIpy.Application(master=root)
 #appUDT.pack(side=RIGHT)
 appGPS.place(bordermode=OUTSIDE, height=200, width=200,relheight = 0.5,relwidth =0.5,relx=0.3, rely=0.5)
-
+appGPSFileReadThreading = threading.Thread(target= appGPS.GPSCustomer,args=(GPSclerkFile,))
+appGPSFileReadThreading.start()
 
 appOTHERS = OTHERSUIpy.Application(master=root)
 #appUDT.pack(side=RIGHT)
 appOTHERS.place(bordermode=OUTSIDE, height=200, width=200,relheight = 0.5,relwidth =0.5,relx=0.6, rely=0.5)
+appOTHERSFileReadThreading = threading.Thread(target= appOTHERS.OTHERSCustomer,args=(OTHERSclerkFile ,))
+appOTHERSFileReadThreading.start()
 
 #app.mainloop()
 print("run here")

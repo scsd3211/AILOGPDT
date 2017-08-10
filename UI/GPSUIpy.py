@@ -10,6 +10,8 @@ class Application(tk.Frame):
         self.Labelm = [1, 2, 3, 4, 5, 6, 7];
         self.Encrym = [1, 2, 3, 4, 5, 6, 7];
         self.root = master
+        self.GPSCustomeLive = True
+        self.ifRun = True
         self.pack()
         #self.createWidgets()
         self.packLabel()
@@ -39,3 +41,10 @@ class Application(tk.Frame):
     def say_hi(self):
         print("hi there, everyone!")
         showme.showme()
+
+    def GPSCustomer(self,clerk):
+        while self.GPSCustomeLive:
+            if self.ifRun:
+                #print("UDT Customer Run")
+                haha = clerk.get()
+                print("GPS UI get 到了数据：（{}）".format(haha))
