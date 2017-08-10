@@ -86,16 +86,18 @@ Focus on solving Hytera the radio BUG", "","Encrypt or not", "Others",
                 needfile = open(self.FileNameIs)
                 lineneed = needfile.readline();
                 while lineneed:
-                    sleep(0.1)
+                    #sleep(0.001)
                     if 1 == 1:
                         print(lineneed.strip())  # 后面跟 ',' 将忽略换行符
                     needhandlestr = lineneed.strip()
                     clerk.put(needhandlestr)
 
                     lineneed = needfile.readline()
-                self.FileNameIs = ''
+
 
                 print("File ---"+ self.FileNameIs + "has been dealt with")
+                needfile.close()
+                self.FileNameIs = ''
                 #tempRunOrNot =0
 
             else:

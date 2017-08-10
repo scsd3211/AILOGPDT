@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import *
 from UDTLOGIC import showme
+from UDTLOGIC import UDTxmlhandle
 class Application(tk.Frame):
 
     def __init__(self, master=None):
@@ -23,6 +24,9 @@ class Application(tk.Frame):
         self.UDTCustomeLive = True
         self.ifRun = True
         showme.showme()
+        UDTxmlhandle.FirstRun()
+       # UDTxmlhandle.CenenctStringToVar(self.strUDT,self.strPersonalorGroup,self.strSourceAddress,self.strTargetAddress,self.strEncryptornot, self.strOthers,self.strNOway)
+
         #self.createWidgets()
 
 
@@ -96,3 +100,34 @@ class Application(tk.Frame):
                 #print("UDT Customer Run")
                 haha = clerk.get()
                 print("UDT UI get 到了数据：（{}）".format(haha))
+
+                self.strNOway.set("NOWay" + haha)
+
+                OthersA = UDTxmlhandle.UDTReadOthersSet()
+                self.strOthers.set("OtherA"+ OthersA)
+
+                EncryptornotA= UDTxmlhandle.UDTReadEncryptornotSet()
+                self.strEncryptornot.set(EncryptornotA)
+
+                targetA = UDTxmlhandle.UDTReadstrTargetAddressSet()
+                self.strTargetAddress.set("target" + targetA)
+
+                SourceA = UDTxmlhandle.UDTReadstrSourceAddressSet()
+                self.strSourceAddress.set("Source" + SourceA)
+
+                PersonalorGroupA = UDTxmlhandle.UDTReadPersonalorGroup()
+                self.strPersonalorGroup.set(PersonalorGroupA)
+
+                UDTStA = UDTxmlhandle.UDTread()
+                self.strUDT.set("UDT" + UDTStA)
+
+                UDThandleBackString = UDTxmlhandle.UDTFeedBack(haha)
+                if UDThandleBackString != "":
+                    print("Find-Show OFF")
+                    #print(UDThandleBackString)
+
+
+
+
+
+
